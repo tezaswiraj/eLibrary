@@ -1,1 +1,48 @@
-<p>user works!</p>
+<div class="row">
+    <div class="col-md-6 slide-in-up mx-auto p-0" style="transition: all .5s ease-in-out;">
+        <div class="card">
+            <div class="login-box">
+                <div class="mycontainer">
+                <div class="login-snip"> <input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">Login</label> <input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab">Sign Up</label>
+                    <div class="login-space">
+                        <div class="login">
+                            <form #loginForm="ngForm" (ngSubmit)="userSubmit(loginForm)">
+                                <div class="group"> <label for="user" class="label">Username</label> 
+                                    <input id="user" type="email" email class="input" placeholder="Enter your username/email" name="username" ngModel #uname="ngModel" required> 
+                                    <small class="muted-text" *ngIf="uname.touched && uname.invalid">enter a valid email</small>
+                                </div>
+                                <div class="group"> <label for="pass" class="label">Password</label>
+                                     <input id="pass" type="password" class="input" data-type="password" placeholder="Enter your password" name="password" ngModel #pass="ngModel" minlength="8" required> 
+                                     <small class="muted-text alert alert-danger" role="alert" *ngIf="pass.touched && pass.invalid">enter a valid password</small>
+                                </div>
+                                <div class="group"> <input id="check" type="checkbox" class="check" checked> <label for="check"><span class="icon"></span> Keep me Signed in</label> </div>
+                                <div class="group"> <input type="submit" class="button" value="Sign In" [disabled]="loginForm.invalid"> </div>
+                                <div class="hr"></div>
+                                <div class="foot"> <a href="#">Forgot Password?</a> </div>
+                            </form>
+                        </div>
+                        <div class="sign-up-form">
+                            <form #regForm="ngForm" (ngSubmit)="regSubmit(regForm)">
+                            <div class="group"> <label for="ruser" class="label">Username</label> <input id="ruser" type="text" class="input" placeholder="Create your Username" name="reguser" minlength="6" ngModel #reguser="ngModel" required>
+                                <small class="muted-text alert-danger" *ngIf="reguser.touched && reguser.invalid">this is a required field</small>
+                                </div>
+                                <div class="group"> <label for="passw" class="label">Password</label> 
+                                    <input id="passw" type="password" class="input" data-type="password" placeholder="Create your password" name="regpassword" minlength="8" ngModel #passw="ngModel" required>
+                                 </div>
+                                <small class="muted-text alert-danger" *ngIf="passw.touched && passw.invalid">enter a valid password</small>
+                                <!-- <div class="group"> <label for="pass" class="label">Repeat Password</label> <input id="pass" type="password" class="input" data-type="password" placeholder="Repeat your password"> </div> -->
+                                <div class="group"> <label for="regemail" class="label">Email Address</label> <input id="regemail" type="text" class="input" email placeholder="Enter your email address" name="regemail" ngModel #regemail="ngModel" required> 
+                                    <small class="muted-text alert-danger" *ngIf="regemail.touched && regemail.invalid">enter your email</small>
+                                </div>
+                                <div class="group"> <input type="submit" class="button" value="Sign Up"> </div>
+                            </form>
+                            <!-- <div class="hr"></div> -->
+                            <div class="foot" style="text-align:center; position: relative; bottom: -19px;"> <label for="tab-1">Already Member?</label> </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>								                            
+</div>

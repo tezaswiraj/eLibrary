@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import { NgForm } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './genshared/components/header/header.component';
@@ -12,7 +12,7 @@ import { AdminComponent } from './genadmin/admin/admin.component';
 import { FullwidthuserComponent } from './layouts/fullwidthuser/fullwidthuser.component';
 import { FullwidthadminComponent } from './layouts/fullwidthadmin/fullwidthadmin.component';
 import { DefaultComponent } from './layouts/default/default.component';
-
+import {FormsModule, ReactiveFormsModule} from '@angular/forms'
 @NgModule({
   declarations: [
     AppComponent,
@@ -28,7 +28,8 @@ import { DefaultComponent } from './layouts/default/default.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
