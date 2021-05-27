@@ -1,0 +1,1 @@
+export interface IAdmin { email: string; id: number; name: string; password: string;}

@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { AngularFireModule } from '@angular/fire';
+
 import { NgForm } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -13,6 +15,11 @@ import { FullwidthuserComponent } from './layouts/fullwidthuser/fullwidthuser.co
 import { FullwidthadminComponent } from './layouts/fullwidthadmin/fullwidthadmin.component';
 import { DefaultComponent } from './layouts/default/default.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms'
+import { environment } from '../environments/environment';
+import { TestComponent } from './test/test/test.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFireDatabaseModule } from '@angular/fire/database';
 @NgModule({
   declarations: [
     AppComponent,
@@ -24,12 +31,17 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms'
     AdminComponent,
     FullwidthuserComponent,
     FullwidthadminComponent,
-    DefaultComponent
+    DefaultComponent,
+    TestComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFirestoreModule,
+    AngularFireDatabaseModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

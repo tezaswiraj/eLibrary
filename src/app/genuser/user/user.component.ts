@@ -7,7 +7,7 @@ import { NgForm } from '@angular/forms'
   styleUrls: ['./user.component.css']
 })
 export class UserComponent implements OnInit {
-
+ 
   constructor() { }
   user:any;
   username:any;
@@ -17,6 +17,7 @@ export class UserComponent implements OnInit {
    console.log(this.user)
    console.log(this.user.username)
    console.log(this.user.password)
+   
  }
  regSubmit(regform:NgForm){
    console.log(regform.value)
@@ -24,8 +25,10 @@ export class UserComponent implements OnInit {
    console.log(regform.value.regpassword)
    console.log(regform.value.reguser)
  }
+ 
 
-  ngOnInit(): void {
-  }
+  ngOnInit() {
+
+    }
 
 }

@@ -1,0 +1,92 @@
+import { Injectable } from '@angular/core';
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
+import { Observable } from 'rxjs';
+import { IMember } from '../adminmodule/members/members';
+import { map } from 'rxjs/operators'
+import { AngularFireAuth } from '@angular/fire/auth'
+@Injectable({
+  providedIn: 'root'
+})
+export class AdminMembersService {
+
+  authState:any = null
+  constructor(private afs: AngularFirestore,private afu:AngularFireAuth) { 
+    this.afu.authState.subscribe((auth => {
+        this.authState = auth
+    }))
+  }
+  private memberCollection!: AngularFirestoreCollection<IMember>;
+  members!: Observable<IMember[]>;
+  getMember(): Observable<IMember[]> {
+    this.memberCollection = this.afs.collection<IMember>('members')
+    this.members = this.memberCollection.snapshotChanges().pipe(
+      map(actions => actions.map(a => {
+        const data = a.payload.doc.data() as IMember;
+        const id = a.payload.doc.id
+        return { id, ...data }
+      }))
+    )
+    return this.members
+  }
+  putMember(member: IMember) {
+    // return this.http.post<IMember>(this.urlMember, member)
+  }
+
+  deleteMember(id: string) {
+    this.afs.doc('members/' + id).delete();
+  }
+  updateMember(member: IMember,id) {
+    this.afs.doc('members/' + id).update(member) 
+  }
+
+  // getMembyId(id: number): Observable<IMember> {
+  //   // return this.http.get<IMember>(this.urlMember + '/' + id);
+  // }
+
+  // updateMemSt1(member: IMember): Observable<IMember> {
+  //   member.ustatus = 1;
+  //   return this.http.put<IMember>(this.urlMember + '/' + member.id, member);
+  // }
+
+  getMemReq() {
+    // return this.http.get<IMember[]>(this.urlMember + '?ustatus=1');
+    this.afs.collection('members',ref => ref.where('ustatus', '==', 1)).valueChanges()
+    .subscribe(data => data.forEach(d=> {
+      console.log(d)
+    }))
+  }
+
+  getMemRec() {
+    // return this.http.get<IMember[]>(this.urlMember + '?urecstatus=1');
+    this.afs.collection('members',ref => ref.where('urecstatus', '==', 1)).valueChanges()
+    .subscribe(data => data.forEach(d=> {
+      console.log(d)
+    }))
+  }
+  registerWithEmail(email:string,password:string) {
+   return this.afu.createUserWithEmailAndPassword(email,password).then(user=>{
+      this.authState = user
+    }).catch(error=>{
+      console.log(error)
+      throw error
+    })
+  }
+
+  currentMember: IMember = {
+    id: -1,
+    uname: '',
+    uadmid: -1,
+    umail: '',
+    udep: '',
+    upassword: '',
+    ustatus: -1,
+    urecstatus: -1,
+    ureqj: '',
+    urecj: ''
+
+    // uborrow: [null],
+    // uowned: [null],
+
+  }
+
+}
