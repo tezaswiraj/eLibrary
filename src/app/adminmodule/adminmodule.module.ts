@@ -21,6 +21,12 @@ import { TransactionComponent } from './transaction/transaction.component';
     AdminmoduleRoutingModule,
     FormsModule,
     ReactiveFormsModule
+  ],
+  exports: [
+    AdminmoduleComponent,
+    BooksComponent,
+    MembersComponent,
+
   ]
 })
 export class AdminmoduleModule { }

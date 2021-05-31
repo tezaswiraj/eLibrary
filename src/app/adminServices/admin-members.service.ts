@@ -17,6 +17,7 @@ export class AdminMembersService {
   }
   private memberCollection!: AngularFirestoreCollection<IMember>;
   members!: Observable<IMember[]>;
+  
   getMember(): Observable<IMember[]> {
     this.memberCollection = this.afs.collection<IMember>('members')
     this.members = this.memberCollection.snapshotChanges().pipe(
@@ -29,7 +30,8 @@ export class AdminMembersService {
     return this.members
   }
   putMember(member: IMember) {
-    // return this.http.post<IMember>(this.urlMember, member)
+    console.log("putMemberStart:  ",member,member.umail,member.upassword,"putMemberEnd")
+    this.afs.collection('members').add(member)
   }
 
   deleteMember(id: string) {
@@ -39,29 +41,32 @@ export class AdminMembersService {
     this.afs.doc('members/' + id).update(member) 
   }
 
-  // getMembyId(id: number): Observable<IMember> {
-  //   // return this.http.get<IMember>(this.urlMember + '/' + id);
-  // }
-
-  // updateMemSt1(member: IMember): Observable<IMember> {
-  //   member.ustatus = 1;
-  //   return this.http.put<IMember>(this.urlMember + '/' + member.id, member);
-  // }
-
-  getMemReq() {
-    // return this.http.get<IMember[]>(this.urlMember + '?ustatus=1');
-    this.afs.collection('members',ref => ref.where('ustatus', '==', 1)).valueChanges()
-    .subscribe(data => data.forEach(d=> {
-      console.log(d)
-    }))
+  getMembyId(id: any) {
+    // return this.http.get<IMember>(this.urlMember + '/' + id);
+    return this.afs.collection<IMember>('members',ref => ref.where('uid','==',id)).valueChanges()   //yet to change id to uid everywhere
   }
 
-  getMemRec() {
+  updateMemSt1(member: IMember) {
+    member.ustatus = 1;
+    console.log("update ustatus:  ",member,member.ustatus)
+    // return this.http.put<IMember>(this.urlMember + '/' + member.id, member);
+    this.afs.doc('members/' + member.id).update(member.ustatus=1);
+  }
+
+  getMemReq():Observable<IMember[]> {
+    // return this.http.get<IMember[]>(this.urlMember + '?ustatus=1');
+    return this.afs.collection<IMember>('members',ref => ref.where('ustatus', '==', 1)).valueChanges()
+    // .subscribe(data => data.forEach(d=> {
+      // console.log(d)
+    // }))
+  }
+
+  getMemRec():Observable<IMember[]> {
     // return this.http.get<IMember[]>(this.urlMember + '?urecstatus=1');
-    this.afs.collection('members',ref => ref.where('urecstatus', '==', 1)).valueChanges()
-    .subscribe(data => data.forEach(d=> {
-      console.log(d)
-    }))
+   return this.afs.collection<IMember>('members',ref => ref.where('urecstatus', '==', 1)).valueChanges()
+    // .subscribe(data => data.forEach(d=> {
+      // console.log(d)
+    // }))
   }
   registerWithEmail(email:string,password:string) {
    return this.afu.createUserWithEmailAndPassword(email,password).then(user=>{

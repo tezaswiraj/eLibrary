@@ -13,6 +13,9 @@ import { DefaultComponent } from './layouts/default/default.component';
 import { FullwidthadminComponent } from './layouts/fullwidthadmin/fullwidthadmin.component';
 import { FullwidthuserComponent } from './layouts/fullwidthuser/fullwidthuser.component';
 import { TestComponent } from './test/test/test.component';
+import { BorrowComponent } from './usermodule/borrow/borrow.component';
+import { ProfileComponent } from './usermodule/profile/profile.component';
+import { UsermoduleComponent } from './usermodule/usermodule.component';
 
 const routes: Routes = [
   {
@@ -32,7 +35,43 @@ const routes: Routes = [
       { path: 'transaction', component: TransactionComponent }
     ]
   },
-  { path:'test', component:TestComponent}
+  {
+    path: 'about', component: FullwidthadminComponent, children: [{
+      path: 'admin', component: AdminComponent, children: [{
+        path: 'admin', component: AdminmoduleComponent, children: [
+          { path: 'books', component: BooksComponent },
+          { path: 'members', component: MembersComponent },
+          { path: 'transaction', component: TransactionComponent }
+        ]
+      }]
+    }]
+  },
+
+  {
+    path: 'user', component: UsermoduleComponent,
+    children: [
+      { path: 'borrow', component: BorrowComponent },
+      // { path: 'owned', component: OwnedComponent },
+      { path: 'profile', component: ProfileComponent },
+      // { path: 'demo', component: DemoComponent },
+    ]
+  },
+
+  {
+    path: 'about', component: FullwidthuserComponent, children: [{
+      path: 'user', component: UserComponent, children: [{
+        path: 'user', component: AdminmoduleComponent, children: [
+          { path: 'borrow', component: BorrowComponent },
+          // { path: 'owned', component: OwnedComponent },
+          { path: 'profile', component: ProfileComponent },
+          // { path: 'demo', component: DemoComponent },
+        ]
+      }]
+    }]
+  },
+  
+  { path:'test', component:TestComponent},
+  { path: 'user', loadChildren: () => import('./usermodule/usermodule.module').then(m => m.UsermoduleModule) },
 ];
 
 @NgModule({

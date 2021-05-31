@@ -34,21 +34,11 @@ export class MembersComponent implements OnInit {
 
   put() {
     this.temp = this.adminMembers.value;
-    // this.temp.uborrow = [];
-    // this.temp.owned = [];
     this.temp.ustatus = 0;
     this.temp.urecstatus = 0;
     this.temp.urecj = '[]';
     this.temp.ureqj = '[]';
-
-
-
-    // this.memberSer.putMember(this.temp).subscribe(
-    //   data => console.log('Success!', data),
-    //   error => console.error('Error!', error)
-    // );
-
-
+    this.memberSer.putMember(this.temp)
   }
 
   delete(id: any) {
@@ -96,25 +86,28 @@ export class MembersComponent implements OnInit {
       
         setTimeout(() => {
           if(mailCheck != false && admidCheck != false){
-            this.afs.collection('members').add(this.adminMembers.value)
-            this.memberSer.registerWithEmail(this.adminMembers.value.umail,this.adminMembers.value.upassword).then(()=>{
-              this.message = "Member successfully added"
-            }).catch(_error => {
-                this.error = _error
-              })
-          }
-        }, 920);
+            // this.afs.collection('members').add(this.adminMembers.value)
+            let cnf = confirm("Press Ok to save the form..");
+            console.log("values:  ",this.adminMembers.value)
+            if (cnf == true) {
+              this.put();
+              this.memberSer.registerWithEmail(this.adminMembers.value.umail,this.adminMembers.value.upassword).then(()=>{
+                this.message = "Member successfully added"
+                console.log(this.message)
+              }).catch(_error => {
+                  this.error = _error
+                  console.log(_error)
+                })
+             this.adminMembers.reset();
+      } else {
+      }            
+    }
+  }, 930);
 
       /*logic for to add member details*/
       setTimeout(() => {
-        let cnf = confirm("Press Ok to save the form..");
-      console.log("values:  ",this.adminMembers.value)
-      if (cnf == true) {
-        this.put();
-        this.adminMembers.reset();
-      } else {
-      }
-      }, 930);
+        
+      }, 920);
   }
   ngOnInit() {
     this.get();
@@ -132,6 +125,8 @@ export class MembersComponent implements OnInit {
     this.adminMembers.valueChanges.subscribe(val=>{
       this.currentField = val
     })
+    
+    console.log(this.currentField)
 
     this.adminMembersUp = this.fbd.group({
       uname: ['', [Validators.required, Validators.minLength(5)]],
@@ -139,55 +134,19 @@ export class MembersComponent implements OnInit {
       umail: ['', [Validators.required, Validators.email]],
       udep: ['', [Validators.required]],
       upassword: ['', [Validators.required, Validators.minLength(8),]],
-
     })
   }
 
   OnUpdate() {
     console.log("update id:  ",this.memberSer.currentMember.id);
     const updateId = this.memberSer.currentMember.id
-    if (updateId != null) 
-    {
-      // console.log("Update!!");
-      // console.log("Update!!");
-
-      // this.memberSer.registerWithEmail(currentMember.umail,currentMember.upassword).then(()=>{
-
-      // })
-
-      // let mailCheck: Boolean;
-      // let admidCheck: Boolean;
-      // this.members.forEach(member => {
-      //   console.log(currentMember.umail)
-      //   console.log(member.umail)
-      //   if (member.umail == currentMember.umail && member.id != currentMember.id) {
-      //     mailCheck = false;
-      //   } else { }
-      //   if (member.uadmid == currentMember.uadmid && member.id != currentMember.id) {
-      //     admidCheck = false;
-      //   } else { }
-      // })
-      // if (mailCheck == false || admidCheck == false) {
-      //   if (mailCheck == false && admidCheck == false) {
-      //     alert("Email id and admission id are already existing...");
-      //   }
-      //   else if (admidCheck == false) {
-      //     alert("Admission id is already existing...");
-      //   }
-      //   else {
-      //     alert("Email id is already existing...");
-      //   }
-      // }
-      //  else {
         /*logic for to add member details*/
         let cnf = confirm("Press Ok to update the user..");
         if (cnf == true) {
           console.log(this.memberSer.currentMember,updateId)
           this.update(this.memberSer.currentMember,updateId);
         }
-        else { }
-      
+        else { }      
     }
-    // else { }
   }
-}
+

@@ -1,5 +1,6 @@
 export interface IBook {
     id: number,
+    bid:number,
     btitle: string,
     bcatag: string,
     bauthor: string,
