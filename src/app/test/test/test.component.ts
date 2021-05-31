@@ -1,6 +1,6 @@
 import { AsyncPipe } from '@angular/common';
 import { Component, Injectable, OnInit } from '@angular/core';
-import{ AngularFirestore } from '@angular/fire/firestore'
+import{ AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore'
 import { AngularFireDatabase,AngularFireList } from '@angular/fire/database'
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs'
@@ -113,7 +113,29 @@ await citiesRef.doc('BJ').set({
   }
   allAdmins:any;
   payloadAd:any;
+  // profile:Observable <IMember>
+  // private profileCollection!: AngularFirestoreCollection<IMember>;
+  prof!: Observable<IMember[]>;
+  profile
+  id
   ngOnInit() {
+   this.prof = this.afs.collection<IMember>('members',ref => ref.where('uadmid','==',21091996)).snapshotChanges().pipe(
+      map(actions => actions.map(a => {
+        const data = a.payload.doc.data() as IMember
+        const id = a.payload.doc.id
+        this.id = id
+        return { id, ...data }
+      }))
+    )
+    
+        this.prof.forEach(pr=>pr.forEach(profile=>{
+          console.log("profile",profile.id)
+          this.profile = profile
+        }))
+        setTimeout(() => {
+          console.log("profile id",this.profile.id)
+          console.log("only id",this.id)
+        }, 3000);
     this.members = this.memberSer.getMember() 
     this.afs.collection('cities').valueChanges().subscribe(city => {
       this.allCity = city

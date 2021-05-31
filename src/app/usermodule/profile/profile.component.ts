@@ -5,6 +5,7 @@ import { AdminMembersService } from 'src/app/adminServices/admin-members.service
 import { FormBuilder, Validators } from '@angular/forms';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-profile',
@@ -34,11 +35,10 @@ export class ProfileComponent implements OnInit {
     
     this.getMember();
 
-    this.afs.collection<IMember>('members',ref => ref.where('uadmid','==',21091996)).valueChanges().subscribe(data => {
-      console.log(data)
+    // this.afs.collection<IMember>('members',ref => ref.where('uadmid','==',21091996)).valueChanges().subscribe(data => {
+    //   console.log(data)
       // data.forEach(d=>console.log(typeof(d.uadmid)))
-    })
-
+    // })
 
     this.adminMembersUp = this.fbd.group({
       uname: ['', [Validators.required, Validators.minLength(5)]],
@@ -60,19 +60,43 @@ export class ProfileComponent implements OnInit {
        console.log("profileComponent:  ",this.userProfile)
       //  console.log("    :profileMail:  ",this.userProfile.umail)
   }
-
+  prof!: Observable<IMember[]>;
+  id
+  profile
   edit(member: IMember) {
     console.log("in edit",member)
-    this.memberSer.currentMember = Object.assign({}, member)
-  }
+    console.log("in edit id",this.userid)
 
+    this.memberSer.currentMember = Object.assign({}, member)
+    this.prof = this.afs.collection<IMember>('members',ref => ref.where('uadmid','==',parseInt(this.userid))).snapshotChanges().pipe(
+      map(actions => actions.map(a => {
+        const data = a.payload.doc.data() as IMember
+        const id = a.payload.doc.id
+        this.id = id
+        return { id, ...data }
+      }))
+    )
+    setTimeout(() => {
+      console.log("this.id=",this.id)
+    }, 1000);
+    this.prof.forEach(pr=>pr.forEach(profile=>{
+      console.log("profile",profile.id)
+      this.profile = profile
+    }))
+    setTimeout(() => {
+      console.log("profile id",this.profile.id)
+      console.log("only id",this.id)
+    }, 900);
+  }
+      
   update(member: IMember) {
-    console.log("in update after called from Onupdate:   ",member,member.id)
-    // this.memberSer.updateMember(member,member.id)
+    console.log("in update after called from Onupdate:   ",member,typeof(this.userid),this.id)
+    this.memberSer.updateMember(member,this.id)
   }
 
   getMember() {
-    this.members = this.memberSer.getMember()
+    // this.members = this.memberSer.getMember()
+    this.members = this.afs.collection<IMember>('members',ref => ref.where('uadmid','!=',parseInt(this.userid))).valueChanges()
     setTimeout(() => {
       this.members.forEach(mem=>{
         console.log("value of mem:  ",mem)
