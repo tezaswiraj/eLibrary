@@ -12,7 +12,7 @@
                             <table class="table">
                                 <thead class="thead bg-warning text-light">
                                     <tr>
-                                        <th scope="col">Id</th>
+<!--                                         <th scope="col">Id</th> -->
                                         <th scope="col">Name</th>
                                         <th scope="col">Admission Id</th>
                                         <th scope="col">Department</th>
@@ -21,7 +21,7 @@
                                 </thead>
                                 <tbody>
                                     <tr *ngFor="let user of reqUsers">
-                                        <td>{{user.id}}</td>
+<!--                                         <td>{{user.id}}</td> -->
                                         <td>{{user.uname}}</td>
                                         <td>{{user.uadmid}}</td>
                                         <td>{{user.udep}}</td>
@@ -48,17 +48,6 @@
                                                             </button>
                                                         </div>
                                                         <div>
-                                                            <!-- <table>
-                                                                <tr *ngFor="let m of reqBooks">
-                                                                    <td>{{m.btitle}}</td>
-                                                                    <td>
-                                                                        <button (click)="ace(m)">
-                                                                            Accept
-                                                                        </button>
-                                                                    </td>
-                                                                </tr>
-                                                            </table> -->
-
                                                             <table class="table">
                                                                 <thead class="thead bg-warning text-light">
                                                                     <tr>
@@ -100,7 +89,7 @@
                                                                                     data-toggle="tooltip"
                                                                                     data-placement="top"
                                                                                     title="Reject request"
-                                                                                    (click)="rej(borrow)">
+                                                                                    (click)="reject(borrow)">
                                                                                     <img src=".\assets\icons\icons8-delete-64.png"
                                                                                         alt=""
                                                                                         style="display: inline-block; padding-bottom: 2px; width: 20px;"
@@ -114,9 +103,6 @@
                                                         </div>
 
                                                         <div class="modal-footer">
-                                                            <!-- <button type="button" class="btn btn-secondary btn-block" data-dismiss="modal">Close</button>
-                                    <button type="button" class="btn btn-primary btn-block" (click)="delsave()"
-                                        data-dismiss="modal">Save</button> -->
                                                         </div>
                                                     </div>
                                                 </div>
@@ -133,7 +119,7 @@
                             <table class="table">
                                 <thead class="thead bg-success text-light">
                                     <tr>
-                                        <th scope="col">Id</th>
+<!--                                         <th scope="col">Id</th> -->
                                         <th scope="col">Name</th>
                                         <th scope="col">Admission Id</th>
                                         <th scope="col">Department</th>
@@ -142,7 +128,7 @@
                                 </thead>
                                 <tbody>
                                     <tr *ngFor="let user of recUsers">
-                                        <td>{{user.id}}</td>
+<!--                                         <td>{{user.id}}</td> -->
                                         <td>{{user.uname}}</td>
                                         <td>{{user.uadmid}}</td>
                                         <td>{{user.udep}}</td>
@@ -168,7 +154,7 @@
                                                             </button>
                                                         </div>
                                                         <div>
-                                                        
+
                                                             <table class="table">
                                                                 <thead class="thead bg-success text-light">
                                                                     <tr>
@@ -194,7 +180,7 @@
                                                                                     class="btn btn-outline-danger"
                                                                                     data-toggle="tooltip"
                                                                                     data-placement="top"
-                                                                                    title="Delete book">
+                                                                                    title="Delete book" (click)="returnBooktoLibraryFromUser(user,borrow)">
                                                                                     <!-- title="Delete book" (click)="uncompleted"> -->
                                                                                     <img src=".\assets\icons\icons8-delete-64.png"
                                                                                         alt=""
@@ -208,9 +194,6 @@
                                                         </div>
 
                                                         <div class="modal-footer">
-                                                            <!-- <button type="button" class="btn btn-secondary btn-block" data-dismiss="modal">Close</button>
-                                    <button type="button" class="btn btn-primary btn-block" (click)="delsave()"
-                                        data-dismiss="modal">Save</button> -->
                                                         </div>
                                                     </div>
                                                 </div>

@@ -27,7 +27,8 @@ export class UsermoduleComponent implements OnInit {
   }
 
   resetSession() {
-    sessionStorage.removeItem("userid");
+//     sessionStorage.removeItem("userid");
+      sessionStorage.clear();
   }
 
 }

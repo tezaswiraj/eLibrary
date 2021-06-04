@@ -10,14 +10,14 @@ import { AngularFireAuth } from '@angular/fire/auth'
 export class AdminMembersService {
 
   authState:any = null
-  constructor(private afs: AngularFirestore,private afu:AngularFireAuth) { 
+  constructor(private afs: AngularFirestore,private afu:AngularFireAuth) {
     this.afu.authState.subscribe((auth => {
         this.authState = auth
     }))
   }
   private memberCollection!: AngularFirestoreCollection<IMember>;
   members!: Observable<IMember[]>;
-  
+
   getMember(): Observable<IMember[]> {
     this.memberCollection = this.afs.collection<IMember>('members')
     this.members = this.memberCollection.snapshotChanges().pipe(
@@ -29,6 +29,21 @@ export class AdminMembersService {
     )
     return this.members
   }
+
+  reqMembersCollection!: AngularFirestoreCollection<IMember>
+  reqMembers!: Observable<IMember[]>;
+  getMemReq():Observable<IMember[]> {
+    // return this.http.get<IMember[]>(this.urlMember + '?ustatus=1');
+    this.reqMembersCollection = this.afs.collection<IMember>('members',ref => ref.where('ustatus', '==', 1))
+    this.reqMembers = this.reqMembersCollection.snapshotChanges().pipe(
+      map(actions => actions.map(a => {
+      const data = a.payload.doc.data() as IMember;
+      const id = a.payload.doc.id
+      return { id, ...data }
+    })))
+    return this.reqMembers
+  }
+
   putMember(member: IMember) {
     console.log("putMemberStart:  ",member,member.umail,member.upassword,"putMemberEnd")
     this.afs.collection('members').add(member)
@@ -38,12 +53,13 @@ export class AdminMembersService {
     this.afs.doc('members/' + id).delete();
   }
   updateMember(member: IMember,id) {
-    this.afs.doc('members/' + id).update(member) 
+    this.afs.doc('members/' + id).update(member)
   }
 
   getMembyId(id: any) {
     // return this.http.get<IMember>(this.urlMember + '/' + id);
-    return this.afs.collection<IMember>('members',ref => ref.where('uid','==',id)).valueChanges()   //yet to change id to uid everywhere
+    // this.afs.collection<IMember>('members').doc(sessionStorage.getItem('userid')).valueChanges().forEach(data=>console.log("data",data.uname))
+    return this.afs.collection<IMember>('members').doc(id).valueChanges()
   }
 
   updateMemSt1(member: IMember) {
@@ -51,14 +67,6 @@ export class AdminMembersService {
     console.log("update ustatus:  ",member,member.ustatus)
     // return this.http.put<IMember>(this.urlMember + '/' + member.id, member);
     this.afs.doc('members/' + member.id).update(member.ustatus=1);
-  }
-
-  getMemReq():Observable<IMember[]> {
-    // return this.http.get<IMember[]>(this.urlMember + '?ustatus=1');
-    return this.afs.collection<IMember>('members',ref => ref.where('ustatus', '==', 1)).valueChanges()
-    // .subscribe(data => data.forEach(d=> {
-      // console.log(d)
-    // }))
   }
 
   getMemRec():Observable<IMember[]> {

@@ -29,6 +29,7 @@ export class UserComponent implements OnInit {
      .subscribe(data => {
        data.forEach( d=> {
          this.temp =  d.payload.doc.data()
+         sessionStorage.setItem("userid",d.payload.doc.id)
        })
      });
      console.log(this.temp)

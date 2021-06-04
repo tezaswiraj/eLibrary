@@ -119,39 +119,41 @@ await citiesRef.doc('BJ').set({
   profile
   id
   ngOnInit() {
-   this.prof = this.afs.collection<IMember>('members',ref => ref.where('uadmid','==',21091996)).snapshotChanges().pipe(
-      map(actions => actions.map(a => {
-        const data = a.payload.doc.data() as IMember
-        const id = a.payload.doc.id
-        this.id = id
-        return { id, ...data }
-      }))
-    )
+    this.afs.collection<IMember>('members').doc(sessionStorage.getItem('userid')).valueChanges().forEach(data=>console.log("data",data.uname))
+    // console.log("doctemp",doctemp)
+  //  this.prof = this.afs.collection<IMember>('members',ref => ref.where('uadmid','==',21091996)).snapshotChanges().pipe(
+  //     map(actions => actions.map(a => {
+  //       const data = a.payload.doc.data() as IMember
+  //       const id = a.payload.doc.id
+  //       this.id = id
+  //       return { id, ...data }
+  //     }))
+  //   )
     
-        this.prof.forEach(pr=>pr.forEach(profile=>{
-          console.log("profile",profile.id)
-          this.profile = profile
-        }))
-        setTimeout(() => {
-          console.log("profile id",this.profile.id)
-          console.log("only id",this.id)
-        }, 3000);
-    this.members = this.memberSer.getMember() 
-    this.afs.collection('cities').valueChanges().subscribe(city => {
-      this.allCity = city
-    })
-    this.afs.collection('admins',ref => ref.where('id', '==', 2)).snapshotChanges().pipe()
-    .subscribe(data => {
-      data.forEach(d=> this.payloadAd = JSON.stringify(d.payload.doc.data()))
-    });
+  //       this.prof.forEach(pr=>pr.forEach(profile=>{
+  //         console.log("profile",profile.id)
+  //         this.profile = profile
+  //       }))
+  //       setTimeout(() => {
+  //         console.log("profile id",this.profile.id)
+  //         console.log("only id",this.id)
+  //       }, 3000);
+    // this.members = this.memberSer.getMember() 
+    // this.afs.collection('cities').valueChanges().subscribe(city => {
+    //   this.allCity = city
+    // })
+    // this.afs.collection('admins',ref => ref.where('id', '==', 2)).snapshotChanges().pipe()
+    // .subscribe(data => {
+    //   data.forEach(d=> this.payloadAd = JSON.stringify(d.payload.doc.data()))
+    // });
     
     // const queryRef = citiesRef.where('state', '==', 'CA');
-    this.afs.collection('admins').valueChanges().subscribe(data1=>{
-      console.log("direct data1: ",data1)
-      this.allAdmins = data1
-      console.log("data1 allAdmins: ",this.allAdmins)
-    })
-    console.log("outer allAdmins: ",this.allAdmins)
+    // this.afs.collection('admins').valueChanges().subscribe(data1=>{
+    //   console.log("direct data1: ",data1)
+    //   this.allAdmins = data1
+    //   console.log("data1 allAdmins: ",this.allAdmins)
+    // })
+    // console.log("outer allAdmins: ",this.allAdmins)
 
   }
     
