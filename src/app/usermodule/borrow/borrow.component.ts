@@ -191,7 +191,7 @@ export class BorrowComponent implements OnInit {
       this.user.urecstatus = 1;
     }
     this.user.urecj = JSON.stringify(this.recievedBooks);
-//     this.memberSer.updateMember(this.user).subscribe();
+    this.memberSer.updateMember(this.user,this.user.id);
   }
   delfrmRec(borrow) {
     let index = this.recievedBooks.findIndex(obj => obj.btitle == borrow.btitle);
@@ -201,15 +201,20 @@ export class BorrowComponent implements OnInit {
 
     let tempcp;
     this.books.forEach(ele => ele.forEach(element=> {
+      console.log(borrow.id,element.id,"in delfrmRec",element.bcopies)
       if (borrow.id == element.id) {
         tempcp = element.bcopies;
       }
     }));
 
-    console.log(tempcp);
+    setTimeout(() => {
+      console.log(tempcp);
     tempcp += 1;
     borrow.bcopies = tempcp;
-    // this.bookSer.updateBook(borrow).subscribe();
+    console.log("borrow copies",borrow.bcopies)
+    this.bookSer.updateBook(borrow,borrow.id)
+
+    }, 1000);
   }
 
 }

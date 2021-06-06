@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AngularFireModule } from '@angular/fire';
 
 import { NgForm } from '@angular/forms';
+import { PdfViewerModule } from 'ng2-pdf-viewer'; // <- import 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './genshared/components/header/header.component';
@@ -20,6 +21,9 @@ import { TestComponent } from './test/test/test.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
+// import { AngularFireModule } from 'angular/fire';
+// import { AngularFireStorage, AngularFireStorageModule } from '@angular/fire/storage';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -40,8 +44,10 @@ import { AngularFireDatabaseModule } from '@angular/fire/database';
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule,
     AngularFireDatabaseModule,
+    // AngularFireStorage,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    PdfViewerModule
   ],
   providers: [],
   bootstrap: [AppComponent]

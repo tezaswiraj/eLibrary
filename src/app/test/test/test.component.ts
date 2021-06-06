@@ -12,7 +12,10 @@ import { FirebaseApp } from '@angular/fire'
 import { inject, waitForAsync } from '@angular/core/testing';
 import { ThisReceiver } from '@angular/compiler';
 import { IMember } from 'src/app/adminmodule/members/members';
+import { PdfViewerModule } from 'ng2-pdf-viewer'; // <- import 
 import { AdminMembersService } from 'src/app/adminServices/admin-members.service';
+// import {AngularFireStorage} from '@angular/fire/storage'
+
 @Component({
   selector: 'app-test',
   templateUrl: './test.component.html',
@@ -29,7 +32,7 @@ export class TestComponent implements OnInit {
   }
 
   userEmail:any;
-
+  pdfcontainer = false;
   temp:any
   async forfunction() {
    let mailCheck: Boolean;
@@ -110,6 +113,14 @@ await citiesRef.doc('BJ').set({
   capital: true, population: 21500000,
   regions: ['jingjinji', 'hebei']
 });
+  }
+  src = 'gs://sancreativelibrary.appspot.com/Books/The Angular Firebase Survival Guide - PDF Room.pdf'
+
+  Angular
+
+
+  viewPdf() {
+    this.pdfcontainer = true
   }
   allAdmins:any;
   payloadAd:any;
