@@ -12,7 +12,7 @@ import { FirebaseApp } from '@angular/fire'
 import { inject, waitForAsync } from '@angular/core/testing';
 import { ThisReceiver } from '@angular/compiler';
 import { IMember } from 'src/app/adminmodule/members/members';
-import { PdfViewerModule } from 'ng2-pdf-viewer'; // <- import 
+// import { PdfViewerModule } from 'ng2-pdf-viewer'; // <- import 
 import { AdminMembersService } from 'src/app/adminServices/admin-members.service';
 // import {AngularFireStorage} from '@angular/fire/storage'
 

@@ -1,5 +1,4 @@
 <div *ngIf="adminProfile">
-
     <div class="bg-danger">
         <div class="card text-white bg-danger " style="width: 100%;">
             <div class="card-header">
@@ -7,7 +6,6 @@
             </div>
         </div>
     </div>
-
     <div>
         <img style="width: 100%;" src=".\assets\images\taylor-ann-wright-xNW9rWnDc4M-unsplash (2).jpg" alt="">
     </div>
@@ -20,11 +18,9 @@
             </div>
         </div>
     </div>
-
     <div style="padding-left: 5%; padding-right: 2%;" class="card sm-3" style="max-width: 100%">
         <div class="row no-gutters">
             <div class="col-sm-2">
-
                 <div class="card-body">
                     <h5 class="card-title">Welcome {{adminProfile}}</h5>
 
@@ -41,9 +37,6 @@
                         <li>
                             <a class="btn btn-block btn-danger" [routerLink]="'members'"> Members</a>
                         </li>
-
-
-
                         <li>
                             <a class="btn btn-block btn-primary" href='#' (click)="resetSession()"> Logout</a>
                         </li>
@@ -55,9 +48,6 @@
                 <router-outlet></router-outlet>
                 <br><br>
             </div>
-
         </div>
     </div>
-
-
 </div>

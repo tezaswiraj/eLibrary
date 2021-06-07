@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AngularFireModule } from '@angular/fire';
 
 import { NgForm } from '@angular/forms';
-import { PdfViewerModule } from 'ng2-pdf-viewer'; // <- import 
+// import { PdfViewerModule } from 'ng2-pdf-viewer'; // <- import 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './genshared/components/header/header.component';
@@ -47,7 +47,7 @@ import { AngularFireDatabaseModule } from '@angular/fire/database';
     // AngularFireStorage,
     FormsModule,
     ReactiveFormsModule,
-    PdfViewerModule
+    // PdfViewerModule
   ],
   providers: [],
   bootstrap: [AppComponent]
