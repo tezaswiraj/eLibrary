@@ -39,9 +39,12 @@
             <div>
                 <!-- <a class="btn btn-primary btn-md btn-block" routerLink='books' role="button">Submit</a> -->
                 <button type="submit" [disabled]="adminForm.invalid"
-                    class="btn btn-primary btn-md btn-block">Login</button>
+                    class="btn btn-primary btn-md btn-block">
+                    <span *ngIf="!showLoadingIndicator">Login</span>
+                    <div class="lds-ellipsis" *ngIf="showLoadingIndicator"><div></div><div></div><div></div><div></div></div>
+                
+                </button>
                 <br>
-
             </div>
         </form>
     </div>
